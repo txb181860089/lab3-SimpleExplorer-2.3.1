@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MoreDetails">
+    tools:context=".JumpActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,26 +18,46 @@
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Name" />
+                android:layout_height="50dp"
+                android:text="JUMP FUNCTION"
+                android:textColor="@android:color/holo_red_dark" />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/minus" />
+                android:layout_height="72dp"
+                android:text="where do you want go?"
+                android:textColor="@color/default_underline_indicator_selected_color" />
 
             <Button
                 android:id="@+id/button10"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/ok" />
+                android:text="to_browser" />
 
             <Button
                 android:id="@+id/button11"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/cancel" />
+                android:text="to_choose_file" />
+
+            <Button
+                android:id="@+id/button12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="to_search" />
+
+            <Button
+                android:id="@+id/button13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="to_settings" />
+
+            <Button
+                android:id="@+id/button14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="back" />
 
         </LinearLayout>
     </ScrollView>

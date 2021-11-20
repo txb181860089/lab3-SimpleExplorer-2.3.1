@@ -14,7 +14,7 @@
         android:screenOrientation="portrait"
         android:theme="@style/ThemeDark"
         android:windowSoftInputMode="adjustPan">
-        <activity android:name=".MoreDetails"></activity>
+        <activity android:name=".JumpActivity"></activity>
         <activity
             android:name=".BrowserActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"

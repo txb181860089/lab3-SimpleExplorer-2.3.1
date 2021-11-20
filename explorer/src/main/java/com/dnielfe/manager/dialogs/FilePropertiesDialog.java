@@ -8,7 +8,6 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -24,8 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
 
-import com.dnielfe.manager.MoreDetails;
-import com.dnielfe.manager.PickerActivity;
+import com.dnielfe.manager.JumpActivity;
 import com.dnielfe.manager.R;
 import com.dnielfe.manager.settings.Settings;
 import com.dnielfe.manager.ui.PageIndicator;
@@ -58,11 +55,10 @@ public final class FilePropertiesDialog extends DialogFragment {
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         mAdapter = new PropertiesAdapter(activity, mFile);
         builder.setTitle(mFile.getName());
-        builder.setNeutralButton("more details", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("jump_function", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.v("tag","onclick");
-                Intent intent = new Intent(activity, MoreDetails.class);
+                Intent intent = new Intent(activity, JumpActivity.class);
                 startActivity(intent);
             }
         });
