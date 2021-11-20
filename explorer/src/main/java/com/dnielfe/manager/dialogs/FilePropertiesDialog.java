@@ -1,22 +1,31 @@
 package com.dnielfe.manager.dialogs;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Button;
 
+import com.dnielfe.manager.MoreDetails;
+import com.dnielfe.manager.PickerActivity;
 import com.dnielfe.manager.R;
 import com.dnielfe.manager.settings.Settings;
 import com.dnielfe.manager.ui.PageIndicator;
@@ -33,27 +42,43 @@ public final class FilePropertiesDialog extends DialogFragment {
     private static File mFile;
     private PropertiesAdapter mAdapter;
 
+
     public static DialogFragment instantiate(File file) {
         mFile = file;
         return new FilePropertiesDialog();
     }
 
+
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     public Dialog onCreateDialog(Bundle state) {
         activity = getActivity();
+
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         mAdapter = new PropertiesAdapter(activity, mFile);
         builder.setTitle(mFile.getName());
-        builder.setNeutralButton(R.string.cancel, null);
+        builder.setNeutralButton("more details", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.v("tag","onclick");
+                Intent intent = new Intent(activity, MoreDetails.class);
+                startActivity(intent);
+            }
+        });
+
+        //builder.setNeutralButton(R.string.cancel, null);
         builder.setPositiveButton(R.string.ok,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Log.v("tag","onclick");
                         final FilePermissionsPagerItem fragment = (FilePermissionsPagerItem) mAdapter
                                 .getItem(1);
                         fragment.applyPermissions(activity);
                     }
                 });
+
         final View content = activity.getLayoutInflater().inflate(
                 R.layout.dialog_properties_container, null);
         this.initView(content);
@@ -68,6 +93,7 @@ public final class FilePropertiesDialog extends DialogFragment {
         PageIndicator mIndicator = (PageIndicator) view.findViewById(R.id.tab_indicator);
         mIndicator.setViewPager(pager);
         mIndicator.setFades(false);
+
     }
 
     @Override
@@ -148,6 +174,7 @@ public final class FilePropertiesDialog extends DialogFragment {
     private static final class FilePropertiesPagerItem implements PagerItem {
         private final File mFile;
         private TextView mPathLabel, mTimeLabel, mSizeLabel, mMD5Label, mSHA1Label;
+        private Button mButton;
         private View mView;
         private LoadFsTask mTask;
 
@@ -185,6 +212,8 @@ public final class FilePropertiesDialog extends DialogFragment {
             this.mSizeLabel = (TextView) table.findViewById(R.id.total_size);
             this.mMD5Label = (TextView) table.findViewById(R.id.md5_summary);
             this.mSHA1Label = (TextView) table.findViewById(R.id.sha1_summary);
+
+
         }
 
         private final class LoadFsTask extends AsyncTask<File, Void, String[]> {
@@ -196,7 +225,10 @@ public final class FilePropertiesDialog extends DialogFragment {
                 mSizeLabel.setText("...");
                 mMD5Label.setText("...");
                 mSHA1Label.setText("...");
+
+
             }
+
 
             @Override
             protected String[] doInBackground(final File... params) {
@@ -230,6 +262,7 @@ public final class FilePropertiesDialog extends DialogFragment {
                     mTimeLabel.setText(result[1]);
                     mMD5Label.setText(result[2]);
                     mSHA1Label.setText(result[3]);
+
                 } else {
                     mSizeLabel.setText("-");
                     mTimeLabel.setText("-");
