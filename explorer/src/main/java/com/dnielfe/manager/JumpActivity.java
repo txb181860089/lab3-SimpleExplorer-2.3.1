@@ -1,13 +1,18 @@
 package com.dnielfe.manager;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import com.dnielfe.manager.settings.Settings;
 import com.dnielfe.manager.settings.SettingsActivity;
+
+import java.util.zip.Inflater;
 
 public class JumpActivity extends AppCompatActivity {
 
@@ -15,6 +20,24 @@ public class JumpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jump);
+        final View view1 = (View)findViewById(R.id.view1);
+        final Switch switch1 = (Switch)findViewById(R.id.switch1);
+        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    switch1.setText("WHITE");
+                    switch1.setTextColor(Color.BLACK);
+                    view1.setBackgroundColor(Color.WHITE);
+
+                }
+                else{
+                    switch1.setText("BLACK");
+                    switch1.setTextColor(Color.WHITE);
+                    view1.setBackgroundColor(Color.BLACK);
+                }
+            }
+        });
         Button jump1 = (Button)findViewById(R.id.button10);
         jump1.setOnClickListener((new View.OnClickListener() {
             @Override
