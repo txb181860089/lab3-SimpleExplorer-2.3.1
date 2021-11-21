@@ -68,7 +68,6 @@ public final class FilePropertiesDialog extends DialogFragment {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.v("tag","onclick");
                         final FilePermissionsPagerItem fragment = (FilePermissionsPagerItem) mAdapter
                                 .getItem(1);
                         fragment.applyPermissions(activity);
