@@ -76,9 +76,7 @@ public class JumpActivity extends AppCompatActivity {
         jump5.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Log.v("tag","onclick");
-                Intent intent = new Intent(JumpActivity.this,  BrowserActivity.class);
-                startActivity(intent);
+                finish();
             }}));
 
 }}
