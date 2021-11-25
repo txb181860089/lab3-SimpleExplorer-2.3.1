@@ -11,7 +11,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,6 @@ import com.dnielfe.manager.ui.PageIndicator;
 import com.dnielfe.manager.utils.Permissions;
 import com.dnielfe.manager.utils.RootCommands;
 import com.dnielfe.manager.utils.SimpleUtils;
-import com.melnykov.fab.FloatingActionButton;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -39,7 +37,6 @@ public final class FilePropertiesDialog extends DialogFragment {
     private PropertiesAdapter mAdapter;
 
 
-
     public static DialogFragment instantiate(File file) {
         mFile = file;
         return new FilePropertiesDialog();
@@ -48,6 +45,8 @@ public final class FilePropertiesDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle state) {
         activity = getActivity();
+
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         mAdapter = new PropertiesAdapter(activity, mFile);
         builder.setTitle(mFile.getName());
@@ -61,27 +60,12 @@ public final class FilePropertiesDialog extends DialogFragment {
                         fragment.applyPermissions(activity);
                     }
                 });
+
         final View content = activity.getLayoutInflater().inflate(
                 R.layout.dialog_properties_container, null);
-        final View content1 = activity.getLayoutInflater().inflate(
-                R.layout.dialog_properties, null);
-        this.initButton(content1);
         this.initView(content);
         builder.setView(content);
         return builder.create();
-    }
-
-    protected void initButton(View rootView) {
-        final Button add_button = (Button)rootView.findViewById(R.id.button2);
-
-        add_button.setText("test");
-        add_button.scrollTo(100,200);
-        add_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                add_button.setText("test");
-            }
-        });
     }
 
     private void initView(final View view) {
@@ -91,6 +75,7 @@ public final class FilePropertiesDialog extends DialogFragment {
         PageIndicator mIndicator = (PageIndicator) view.findViewById(R.id.tab_indicator);
         mIndicator.setViewPager(pager);
         mIndicator.setFades(false);
+
     }
 
     @Override
@@ -226,7 +211,10 @@ public final class FilePropertiesDialog extends DialogFragment {
                 mSizeLabel.setText("...");
                 mMD5Label.setText("...");
                 mSHA1Label.setText("...");
+
+
             }
+
 
             @Override
             protected String[] doInBackground(final File... params) {
@@ -266,11 +254,11 @@ public final class FilePropertiesDialog extends DialogFragment {
                             Count++;
                             if((Count % 2)==1) {
                                 mView.setBackgroundColor(Color.BLUE);
-                                mButton.setText("ChangeWhite");
+                                mButton.setText("CHANGEWHITE");
                             }
                             else{
                                 mView.setBackgroundColor(Color.WHITE);
-                                mButton.setText("ChangeBlue");
+                                mButton.setText("CHANGEBLUE");
                             }
                         }
                     });
@@ -279,6 +267,7 @@ public final class FilePropertiesDialog extends DialogFragment {
                         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                             if(b){
                                 mText.setText("RED");
+                                mText.setTextColor(Color.RED);
                                 mPathLabel.setTextColor(Color.RED);
                                 mSizeLabel.setTextColor(Color.RED);
                                 mTimeLabel.setTextColor(Color.RED);
@@ -287,6 +276,7 @@ public final class FilePropertiesDialog extends DialogFragment {
                             }
                             else{
                                 mText.setText("GRAY");
+                                mText.setTextColor(Color.GRAY);
                                 mPathLabel.setTextColor(Color.GRAY);
                                 mSizeLabel.setTextColor(Color.GRAY);
                                 mTimeLabel.setTextColor(Color.GRAY);
