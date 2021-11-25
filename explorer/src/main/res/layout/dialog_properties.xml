@@ -28,7 +28,7 @@
                 android:textColor="@android:color/holo_red_dark"
                 android:textColorLink="?attr/colorAccent"
                 android:textIsSelectable="false"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
