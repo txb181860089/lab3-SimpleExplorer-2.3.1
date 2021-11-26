@@ -146,6 +146,7 @@
                 android:singleLine="true"
                 android:text="@string/minus"
                 android:textIsSelectable="false" />
+
         </LinearLayout>
 
         <LinearLayout

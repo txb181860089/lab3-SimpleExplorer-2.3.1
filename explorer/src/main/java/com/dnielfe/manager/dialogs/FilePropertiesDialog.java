@@ -1,16 +1,20 @@
 package com.dnielfe.manager.dialogs;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +23,9 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Button;
 
+import com.dnielfe.manager.JumpActivity;
 import com.dnielfe.manager.R;
 import com.dnielfe.manager.settings.Settings;
 import com.dnielfe.manager.ui.PageIndicator;
@@ -42,6 +48,8 @@ public final class FilePropertiesDialog extends DialogFragment {
         return new FilePropertiesDialog();
     }
 
+
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     public Dialog onCreateDialog(Bundle state) {
         activity = getActivity();
@@ -50,7 +58,15 @@ public final class FilePropertiesDialog extends DialogFragment {
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         mAdapter = new PropertiesAdapter(activity, mFile);
         builder.setTitle(mFile.getName());
-        builder.setNeutralButton(R.string.cancel, null);
+        builder.setNeutralButton("jump_function", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(activity, JumpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //builder.setNeutralButton(R.string.cancel, null);
         builder.setPositiveButton(R.string.ok,
                 new DialogInterface.OnClickListener() {
                     @Override
