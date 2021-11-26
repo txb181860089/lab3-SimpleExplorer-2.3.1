@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -13,7 +14,9 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +36,7 @@ public final class FilePropertiesDialog extends DialogFragment {
     private static File mFile;
     private PropertiesAdapter mAdapter;
 
+
     public static DialogFragment instantiate(File file) {
         mFile = file;
         return new FilePropertiesDialog();
@@ -41,6 +45,8 @@ public final class FilePropertiesDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle state) {
         activity = getActivity();
+
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         mAdapter = new PropertiesAdapter(activity, mFile);
         builder.setTitle(mFile.getName());
@@ -54,6 +60,7 @@ public final class FilePropertiesDialog extends DialogFragment {
                         fragment.applyPermissions(activity);
                     }
                 });
+
         final View content = activity.getLayoutInflater().inflate(
                 R.layout.dialog_properties_container, null);
         this.initView(content);
@@ -68,6 +75,7 @@ public final class FilePropertiesDialog extends DialogFragment {
         PageIndicator mIndicator = (PageIndicator) view.findViewById(R.id.tab_indicator);
         mIndicator.setViewPager(pager);
         mIndicator.setFades(false);
+
     }
 
     @Override
@@ -147,9 +155,12 @@ public final class FilePropertiesDialog extends DialogFragment {
 
     private static final class FilePropertiesPagerItem implements PagerItem {
         private final File mFile;
-        private TextView mPathLabel, mTimeLabel, mSizeLabel, mMD5Label, mSHA1Label;
+        private TextView mPathLabel, mTimeLabel, mSizeLabel, mMD5Label, mSHA1Label, mText;
+        private Button mButton;
+        private Switch mSwitch;
         private View mView;
         private LoadFsTask mTask;
+        private int Count;
 
         private FilePropertiesPagerItem(File file) {
             mFile = file;
@@ -185,6 +196,10 @@ public final class FilePropertiesDialog extends DialogFragment {
             this.mSizeLabel = (TextView) table.findViewById(R.id.total_size);
             this.mMD5Label = (TextView) table.findViewById(R.id.md5_summary);
             this.mSHA1Label = (TextView) table.findViewById(R.id.sha1_summary);
+            this.mButton = (Button) table.findViewById(R.id.button2);
+            this.mSwitch = (Switch) table.findViewById(R.id.switch3);
+            this.mText = (TextView) table.findViewById(R.id.textView);
+            this.Count = 0;
         }
 
         private final class LoadFsTask extends AsyncTask<File, Void, String[]> {
@@ -196,7 +211,10 @@ public final class FilePropertiesDialog extends DialogFragment {
                 mSizeLabel.setText("...");
                 mMD5Label.setText("...");
                 mSHA1Label.setText("...");
+
+
             }
+
 
             @Override
             protected String[] doInBackground(final File... params) {
@@ -230,6 +248,45 @@ public final class FilePropertiesDialog extends DialogFragment {
                     mTimeLabel.setText(result[1]);
                     mMD5Label.setText(result[2]);
                     mSHA1Label.setText(result[3]);
+                    mButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Count++;
+                            if((Count % 2)==1) {
+                                mView.setBackgroundColor(Color.BLUE);
+                                mButton.setText("CHANGEWHITE");
+                            }
+                            else{
+                                mView.setBackgroundColor(Color.WHITE);
+                                mButton.setText("CHANGEBLUE");
+                            }
+                        }
+                    });
+                    mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                            if(b){
+                                mText.setText("RED");
+                                mText.setTextColor(Color.RED);
+                                mPathLabel.setTextColor(Color.RED);
+                                mSizeLabel.setTextColor(Color.RED);
+                                mTimeLabel.setTextColor(Color.RED);
+                                mMD5Label.setTextColor(Color.RED);
+                                mSHA1Label.setTextColor(Color.RED);
+                            }
+                            else{
+                                mText.setText("GRAY");
+                                mText.setTextColor(Color.GRAY);
+                                mPathLabel.setTextColor(Color.GRAY);
+                                mSizeLabel.setTextColor(Color.GRAY);
+                                mTimeLabel.setTextColor(Color.GRAY);
+                                mMD5Label.setTextColor(Color.GRAY);
+                                mSHA1Label.setTextColor(Color.GRAY);
+                            }
+                        }
+                    });
+
+
                 } else {
                     mSizeLabel.setText("-");
                     mTimeLabel.setText("-");
